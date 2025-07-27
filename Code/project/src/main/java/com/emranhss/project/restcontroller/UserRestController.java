@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,4 +52,10 @@ public class UserRestController {
        }
     }
 
+
+    @GetMapping("")
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> users = userService.findAll();
+        return ResponseEntity.ok(users);
+    }
 }
