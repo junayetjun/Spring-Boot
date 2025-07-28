@@ -20,17 +20,20 @@ public class User {
     private String password;
     private String photo;
 
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 
     public User() {
     }
 
-    public User(int id, String name, String email, String phone, String password, String photo) {
+    public User(int id, String name, String email, String phone, String password, String photo, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.photo = photo;
+        this.role = role;
     }
 
     public int getId() {
@@ -79,5 +82,13 @@ public class User {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

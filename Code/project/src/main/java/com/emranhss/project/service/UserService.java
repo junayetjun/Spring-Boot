@@ -1,6 +1,8 @@
 package com.emranhss.project.service;
 
 
+import com.emranhss.project.entity.JobSeeker;
+import com.emranhss.project.entity.Role;
 import com.emranhss.project.entity.User;
 import com.emranhss.project.repository.IUserRepo;
 import jakarta.mail.MessagingException;
@@ -27,6 +29,9 @@ public class UserService {
         @Autowired
         private EmailService emailService;
 
+        @Autowired
+        private JobSeekerService jobSeekerService;
+
         @Value("src/main/resources/static/images")
         private String uploadDir;
 
@@ -36,7 +41,7 @@ public class UserService {
                 user.setPhoto(fileName);
             }
 
-
+             user.setRole(Role.ADMIN);
              iUserRepo.save(user);
              sendActivationEmail(user);
         }
@@ -96,6 +101,7 @@ public class UserService {
     }
 
 
+    //for User Only
     public String saveImage(MultipartFile file, User user){
         Path uploadPath = Paths.get(uploadDir+"/users");
 
@@ -122,6 +128,57 @@ public class UserService {
 
         return fileName;
     }
+
+    public String saveImageForJobSeeker(MultipartFile file, JobSeeker jobSeeker){
+        Path uploadPath = Paths.get(uploadDir+"/jobseeker");
+
+        if(!Files.exists(uploadPath)){
+            try {
+                Files.createDirectory(uploadPath);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        String jobSeekerName = jobSeeker.getName();
+        String fileName = jobSeekerName.trim().replaceAll("\\s+","_");
+
+        String savedFileName = fileName +"_" + UUID.randomUUID().toString();
+
+
+        try {
+            Path filePath = uploadPath.resolve(savedFileName);
+            Files.copy(file.getInputStream(), filePath);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return savedFileName;
+    }
+
+
+    public void registrationJobSeeker(User user, MultipartFile imageFile, JobSeeker jobSeekerData){
+            if(imageFile!= null && !imageFile.isEmpty()){
+                String fileName = saveImage(imageFile, user);
+                String jobSeekerPhoto = saveImageForJobSeeker(imageFile, jobSeekerData);
+                jobSeekerData.setPhoto(jobSeekerPhoto);
+                user.setPhoto(fileName);
+
+
+            }
+
+            user.setRole(Role.JOBSEEKER);
+            User savedUser = iUserRepo.save(user);
+
+            jobSeekerData.setUser(savedUser);
+
+            jobSeekerService.save(jobSeekerData);
+
+            sendActivationEmail(savedUser);
+    }
+
+
 
 
 }
