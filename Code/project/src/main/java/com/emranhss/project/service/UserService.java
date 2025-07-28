@@ -129,6 +129,7 @@ public class UserService {
         return fileName;
     }
 
+    //for Jobseeker Only
     public String saveImageForJobSeeker(MultipartFile file, JobSeeker jobSeeker){
         Path uploadPath = Paths.get(uploadDir+"/jobseeker");
 
