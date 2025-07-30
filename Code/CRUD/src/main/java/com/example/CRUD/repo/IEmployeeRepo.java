@@ -1,4 +1,4 @@
-package com.example.CRUD.repository;
+package com.example.CRUD.repo;
 
 import com.example.CRUD.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
