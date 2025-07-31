@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Add Student</title>
+</head>
+<body>
+<div class="container">
+
+   <a href="/stuForm"> <button type="button" class="btn btn-primary" style="position: absolute; top: 10px; right: 10px;">Add Student</button></a>
+
+
+    <h3 style="text-align: center; margin-bottom: 10px; background-color: #c9bfb7;
+    margin-top:10px
+">Student Details</h3>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Roll</th>
+            <th>Name</th>
+            <th>Mark</th>
+            <th>Subject</th>
+            <th>Action</th>
+
+        </tr>
+
+
+        </thead>
+
+        <tbody>
+        <tr th:each=" s: ${list}">
+            <td th:text="${s.roll}"></td>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.mark}"></td>
+            <td th:text="${s.subject}"></td>
+            <td>
+                <a th:href="@{'/edit/' + ${s.id}}" class="btn btn-warning">Edit</a>
+                <a th:href="@{'/delete/' + ${s.id}}" class="btn btn-danger">Delete</a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
