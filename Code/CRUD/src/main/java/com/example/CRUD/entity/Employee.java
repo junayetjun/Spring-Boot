@@ -1,15 +1,18 @@
 package com.example.CRUD.entity;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "employees")
 public class Employee {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
     private String name;
     private float salary;
     private String designation;
@@ -17,20 +20,18 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Long id, String name, float salary, String designation) {
+    public Employee(long id, String name, float salary, String designation) {
         this.id = id;
         this.name = name;
         this.salary = salary;
         this.designation = designation;
     }
 
-    public Employee(String name, float salary, String designation) {}
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

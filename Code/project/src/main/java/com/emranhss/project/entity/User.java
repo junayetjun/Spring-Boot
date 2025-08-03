@@ -2,10 +2,16 @@ package com.emranhss.project.entity;
 
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +28,14 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
+    @OneToMany
+    private List<Token> tokens;
+
+    //for User details*******************************
+    @Column(nullable = false)
+    private boolean active;
+    private boolean isLock;
 
     public User() {
     }
@@ -90,5 +104,36 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    //implement Methods
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isLock;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled();
     }
 }
