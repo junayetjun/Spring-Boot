@@ -9,6 +9,9 @@ import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.SqlReturnType;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,42 +24,49 @@ import java.util.UUID;
 
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
-        @Autowired
-        private IUserRepo iUserRepo;
+    @Autowired
+    private IUserRepo iUserRepo;
 
-        @Autowired
-        private EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
-        @Autowired
-        private JobSeekerService jobSeekerService;
+    @Autowired
+    private JobSeekerService jobSeekerService;
 
-        @Value("src/main/resources/static/images")
-        private String uploadDir;
+    @Value("src/main/resources/static/images")
+    private String uploadDir;
 
-        public void saveOrUpdate(User user, MultipartFile imageFile){
-            if(imageFile != null && !imageFile.isEmpty()){
-                String fileName = saveImage(imageFile, user);
-                user.setPhoto(fileName);
-            }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return iUserRepo.findByEmail(username)
+                .orElseThrow(()-> new UsernameNotFoundException("User not found with this " + username +" name"));
+    }
 
-             user.setRole(Role.ADMIN);
-             iUserRepo.save(user);
-             sendActivationEmail(user);
+
+    public void saveOrUpdate(User user, MultipartFile imageFile) {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String fileName = saveImage(imageFile, user);
+            user.setPhoto(fileName);
         }
 
-        public List<User> findAll(){
-            return iUserRepo.findAll();
-        }
+        user.setRole(Role.ADMIN);
+        iUserRepo.save(user);
+        sendActivationEmail(user);
+    }
 
-        public User findById(int id){
-            return iUserRepo.findById(id).get();
-        }
+    public List<User> findAll() {
+        return iUserRepo.findAll();
+    }
 
-        public void deleteZ(User user){
-            iUserRepo.delete(user);
-        }
+    public User findById(int id) {
+        return iUserRepo.findById(id).get();
+    }
+
+    public void deleteZ(User user) {
+        iUserRepo.delete(user);
+    }
 
 
     private void sendActivationEmail(User user) {
@@ -102,10 +112,10 @@ public class UserService {
 
 
     //for User Only
-    public String saveImage(MultipartFile file, User user){
-        Path uploadPath = Paths.get(uploadDir+"/users");
+    public String saveImage(MultipartFile file, User user) {
+        Path uploadPath = Paths.get(uploadDir + "/users");
 
-        if(!Files.exists(uploadPath)){
+        if (!Files.exists(uploadPath)) {
             try {
                 Files.createDirectory(uploadPath);
 
@@ -114,9 +124,8 @@ public class UserService {
             }
         }
 
-        String fileName = user.getName()+ "_"+ UUID.randomUUID()
+        String fileName = user.getName() + "_" + UUID.randomUUID()
                 .toString();
-
 
 
         try {
@@ -130,10 +139,10 @@ public class UserService {
     }
 
     //for Jobseeker Only
-    public String saveImageForJobSeeker(MultipartFile file, JobSeeker jobSeeker){
-        Path uploadPath = Paths.get(uploadDir+"/jobseeker");
+    public String saveImageForJobSeeker(MultipartFile file, JobSeeker jobSeeker) {
+        Path uploadPath = Paths.get(uploadDir + "/jobseeker");
 
-        if(!Files.exists(uploadPath)){
+        if (!Files.exists(uploadPath)) {
             try {
                 Files.createDirectory(uploadPath);
 
@@ -143,9 +152,9 @@ public class UserService {
         }
 
         String jobSeekerName = jobSeeker.getName();
-        String fileName = jobSeekerName.trim().replaceAll("\\s+","_");
+        String fileName = jobSeekerName.trim().replaceAll("\\s+", "_");
 
-        String savedFileName = fileName +"_" + UUID.randomUUID().toString();
+        String savedFileName = fileName + "_" + UUID.randomUUID().toString();
 
 
         try {
@@ -159,27 +168,25 @@ public class UserService {
     }
 
 
-    public void registrationJobSeeker(User user, MultipartFile imageFile, JobSeeker jobSeekerData){
-            if(imageFile!= null && !imageFile.isEmpty()){
-                String fileName = saveImage(imageFile, user);
-                String jobSeekerPhoto = saveImageForJobSeeker(imageFile, jobSeekerData);
-                jobSeekerData.setPhoto(jobSeekerPhoto);
-                user.setPhoto(fileName);
+    public void registrationJobSeeker(User user, MultipartFile imageFile, JobSeeker jobSeekerData) {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String fileName = saveImage(imageFile, user);
+            String jobSeekerPhoto = saveImageForJobSeeker(imageFile, jobSeekerData);
+            jobSeekerData.setPhoto(jobSeekerPhoto);
+            user.setPhoto(fileName);
 
 
-            }
+        }
 
-            user.setRole(Role.JOBSEEKER);
-            User savedUser = iUserRepo.save(user);
+        user.setRole(Role.JOBSEEKER);
+        User savedUser = iUserRepo.save(user);
 
-            jobSeekerData.setUser(savedUser);
+        jobSeekerData.setUser(savedUser);
 
-            jobSeekerService.save(jobSeekerData);
+        jobSeekerService.save(jobSeekerData);
 
-            sendActivationEmail(savedUser);
+        sendActivationEmail(savedUser);
     }
-
-
 
 
 }
