@@ -106,7 +106,7 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    //implement Methods
+    //Implement Methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
