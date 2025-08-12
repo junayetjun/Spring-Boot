@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/user/")
-public class UserRestController {
+@RequestMapping("/auth/")
+public class AuthRestController {
 
     @Autowired
     private AuthService authService;
@@ -55,25 +55,24 @@ public class UserRestController {
 
     @GetMapping("all")
     public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = authService.findAll
-                ();
+        List<User> users = authService.findAll();
         return ResponseEntity.ok(users);
 
     }
 
 
     @PostMapping("login")
-    public ResponseEntity<AuthenticationResponse>  login(@RequestBody User request){
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody User request) {
         return ResponseEntity.ok(authService.authenticate(request));
 
     }
 
 
     @GetMapping("/active/{id}")
-    public ResponseEntity<String> activeUser(@PathVariable("id") int id){
+    public ResponseEntity<String> activeUser(@PathVariable("id") int id) {
 
-        String response= authService.activeUser(id);
-        return  ResponseEntity.ok(response);
+        String response = authService.activeUser(id);
+        return ResponseEntity.ok(response);
     }
 
 
@@ -94,4 +93,5 @@ public class UserRestController {
 
         return ResponseEntity.ok("Logged out successfully.");
     }
+
 }

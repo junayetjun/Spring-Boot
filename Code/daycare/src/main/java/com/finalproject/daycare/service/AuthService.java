@@ -1,12 +1,19 @@
 package com.finalproject.daycare.service;
 
+import com.finalproject.daycare.dto.AuthenticationResponse;
 import com.finalproject.daycare.entity.Role;
+import com.finalproject.daycare.entity.Token;
 import com.finalproject.daycare.entity.User;
+import com.finalproject.daycare.jwt.JwtService;
 import com.finalproject.daycare.repository.ITokenRepository;
 import com.finalproject.daycare.repository.IUserRepo;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +35,13 @@ public class AuthService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    @Lazy
+    private AuthenticationManager authenticationManager;
 
 
     @Value("src/main/resources/static/images")
@@ -127,5 +141,80 @@ public class AuthService {
         } catch (MessagingException e) {
             throw new RuntimeException("Failed to send activation email", e);
         }
+    }
+
+    private void saveUserToken(String jwt, User user) {
+        Token token = new Token();
+        token.setToken(jwt);
+        token.setLogout(false);
+        token.setUser(user);
+
+        tokenRepository.save(token);
+
+    }
+
+    private void removeAllTokenByUser(User user) {
+
+        List<Token> validTokens = tokenRepository.findAllTokenByUser(user.getId());
+
+        if (validTokens.isEmpty()) {
+            return;
+        }
+        validTokens.forEach(t -> {
+            t.setLogout(true);
+        });
+
+        tokenRepository.saveAll(validTokens);
+
+    }
+
+
+    // It is Login Method
+    public AuthenticationResponse authenticate(User request) {
+        // Authenticate Username & Password
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getUsername(),
+                        request.getPassword()
+                )
+        );
+
+        // Fetch User from DB
+        User user = userRepo.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Check Activation Status
+        if (!user.isActive()) {
+            throw new RuntimeException("Account is not activated. Please check your email for activation link.");
+        }
+
+        // Generate JWT Token
+        String jwt = jwtService.generateToken(user);
+
+        // Remove Existing Tokens (Invalidate Old Sessions)
+        removeAllTokenByUser(user);
+
+        // Save New Token to DB (Optional if stateless)
+        saveUserToken(jwt, user);
+
+        // Return Authentication Response
+        return new AuthenticationResponse(jwt, "User Login Successful");
+    }
+
+    public String activeUser(int id) {
+
+        User user = userRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not Found with this ID " + id));
+
+        if (user != null) {
+            user.setActive(true);
+
+            userRepo.save(user);
+            return "User Activated Successfully!";
+
+        } else {
+            return "Invalid Activation Token!";
+        }
+
     }
 }
