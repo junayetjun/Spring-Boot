@@ -129,6 +129,7 @@ public class User implements UserDetails {
         isLock = lock;
     }
 
+    //implements methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

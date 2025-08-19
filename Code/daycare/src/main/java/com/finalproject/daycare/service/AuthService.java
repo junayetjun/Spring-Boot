@@ -1,6 +1,7 @@
 package com.finalproject.daycare.service;
 
 import com.finalproject.daycare.dto.AuthenticationResponse;
+import com.finalproject.daycare.entity.Caregiver;
 import com.finalproject.daycare.entity.Role;
 import com.finalproject.daycare.entity.Token;
 import com.finalproject.daycare.entity.User;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +30,9 @@ import java.util.UUID;
 public class AuthService {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private IUserRepo userRepo;
 
     @Autowired
@@ -35,6 +40,9 @@ public class AuthService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private CaregiverService caregiverService;
 
     @Autowired
     private JwtService jwtService;
@@ -141,6 +149,65 @@ public class AuthService {
         } catch (MessagingException e) {
             throw new RuntimeException("Failed to send activation email", e);
         }
+    }
+
+    // for Caregiver folder
+    public String saveImageForCaregiver(MultipartFile file, Caregiver caregiver) {
+
+        Path uploadPath = Paths.get(uploadDir + "/caregiver");
+        if (!Files.exists(uploadPath)) {
+            try {
+                Files.createDirectory(uploadPath);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        String caregiverName = caregiver.getName();
+        String fileName = caregiverName.trim().replaceAll("\\s+", "_");
+
+        String savedFileName = fileName + "_" + UUID.randomUUID().toString();
+
+        try {
+            Path filePath = uploadPath.resolve(savedFileName);
+            Files.copy(file.getInputStream(), filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return savedFileName;
+
+    }
+
+
+    public void registerCaregiver(User user, MultipartFile imageFile, Caregiver caregiverData) {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            // Save image for both User and Caregiver
+            String filename = saveImage(imageFile, user);
+            String caregiverPhoto = saveImageForCaregiver(imageFile, caregiverData);
+            caregiverData.setPhoto(caregiverPhoto);
+            user.setPhoto(filename);
+        }
+
+        //Eta pore active korte hobe jokhn security r kaaj korbo
+        // Encode password before saving User
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.SERVICE_PROVIDER);
+        user.setActive(false);
+
+        // Save User FIRST and get persisted instance
+        User savedUser = userRepo.save(user);
+
+        // Now, associate saved User with JobSeeker and save JobSeeker
+        caregiverData.setUser(savedUser);
+        caregiverService.save(caregiverData);
+
+        // Now generate token and save Token associated with savedUser
+        String jwt = jwtService.generateToken(savedUser);
+        saveUserToken(jwt, savedUser);
+
+        // Send Activation Email
+        sendActivationEmail(savedUser);
     }
 
     private void saveUserToken(String jwt, User user) {
