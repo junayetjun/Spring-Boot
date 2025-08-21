@@ -1,11 +1,9 @@
 package com.finalproject.daycare.service;
 
 import com.finalproject.daycare.dto.AuthenticationResponse;
-import com.finalproject.daycare.entity.Caregiver;
-import com.finalproject.daycare.entity.Role;
-import com.finalproject.daycare.entity.Token;
-import com.finalproject.daycare.entity.User;
+import com.finalproject.daycare.entity.*;
 import com.finalproject.daycare.jwt.JwtService;
+import com.finalproject.daycare.repository.IParentRepository;
 import com.finalproject.daycare.repository.ITokenRepository;
 import com.finalproject.daycare.repository.IUserRepo;
 import jakarta.mail.MessagingException;
@@ -43,6 +41,9 @@ public class AuthService {
 
     @Autowired
     private CaregiverService caregiverService;
+
+    @Autowired
+    private IParentRepository parentRepository;
 
     @Autowired
     private JwtService jwtService;
@@ -283,5 +284,62 @@ public class AuthService {
             return "Invalid Activation Token!";
         }
 
+    }
+
+    // for parent User folder
+    public String saveImageForParent(MultipartFile file, Parent parent) {
+
+        Path uploadPath = Paths.get(uploadDir + "/parent");
+        if (!Files.exists(uploadPath)) {
+            try {
+                Files.createDirectory(uploadPath);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        String parentName = parent.getName();
+        String fileName = parentName.trim().replaceAll("\\s+", "_");
+
+        String savedFileName = fileName + "_" + UUID.randomUUID().toString();
+
+        try {
+            Path filePath = uploadPath.resolve(savedFileName);
+            Files.copy(file.getInputStream(), filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return savedFileName;
+
+    }
+
+    public void registerParent(User user, MultipartFile imageFile, Parent parentData) {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            // Save image for both User and JobSeeker
+            String filename = saveImage(imageFile, user);
+            String parentPhoto = saveImageForParent(imageFile, parentData);
+            parentData.setPhoto(parentPhoto);
+            user.setPhoto(filename);
+        }
+
+        // Encode password before saving User
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.PARENT);
+        user.setActive(false);
+
+        // Save User FIRST and get persisted instance
+        User savedUser = userRepo.save(user);
+
+        // Now, associate saved User with JobSeeker and save JobSeeker
+        parentData.setUser(savedUser);
+        parentRepository.save(parentData);
+
+        // Now generate token and save Token associated with savedUser
+        String jwt = jwtService.generateToken(savedUser);
+        saveUserToken(jwt, savedUser);
+
+        // Send Activation Email
+        sendActivationEmail(savedUser);
     }
 }
