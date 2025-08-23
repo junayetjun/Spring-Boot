@@ -30,7 +30,7 @@ public class Parent {
     public Parent() {
     }
 
-    public Parent(Long id, String name, String lastName, String email, String contactPerson, String phone, String photo, User user) {
+    public Parent(Long id, String name, String email, String contactPerson, String phone, String photo, User user) {
         this.id = id;
         this.name = name;
         this.email = email;
