@@ -2,6 +2,9 @@ package com.finalproject.daycare.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Parent {
 
@@ -22,6 +25,9 @@ public class Parent {
     private String phone;
 
     private String photo;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Child> childs = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -95,5 +101,13 @@ public class Parent {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Child> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(List<Child> childs) {
+        this.childs = childs;
     }
 }

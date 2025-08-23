@@ -32,6 +32,6 @@ public class CaregiverService {
 
     public Caregiver getProfileByUserId(int userId) {
         return caregiverRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Job Seeker not found"));
+                .orElseThrow(() -> new RuntimeException("Caregiver not found"));
     }
 }

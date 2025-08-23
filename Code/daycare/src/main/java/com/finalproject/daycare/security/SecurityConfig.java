@@ -51,8 +51,8 @@ public class SecurityConfig {
                                 "/api/district/",
                                 "/api/district/**",
                                 "/api/policestation/",
-                                "/api/employer/",
-                                "/api/employer/**",
+                                "/api/parent/",
+                                "/api/parent/**",
                                 "/api/countries/**",
                                 "/api/division/**",
                                 "/api/policestation/**",
@@ -61,7 +61,7 @@ public class SecurityConfig {
 
                         ).permitAll()
                         .requestMatchers("/api/user/all","/api/caregiver/profile", "/api/education/all", "/api/experience/all", "/api/experience/add", "/api/education/add", "/api/skill/add", "/api/skill/all").hasRole("SERVICE_PROVIDER")
-                        .requestMatchers("api/employer/profile").hasRole("SERVICE_HOLDER")
+                        .requestMatchers("api/parent/profile").hasRole("PARENT")
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userService)
