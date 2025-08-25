@@ -1,5 +1,6 @@
 package com.finalproject.daycare.service;
 
+import com.finalproject.daycare.entity.Caregiver;
 import com.finalproject.daycare.entity.Parent;
 import com.finalproject.daycare.jwt.JwtService;
 import com.finalproject.daycare.repository.IParentRepository;
@@ -55,8 +56,16 @@ public class ParentService {
         return parentRepository.findAll();
     }
 
+    public Parent save(Parent parent) {
+        return parentRepository.save(parent);
+    }
+
+    public void delete(Long id) {
+        parentRepository.deleteById(id);
+    }
+
     public Parent getProfileByUserId(int userId) {
         return parentRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Caregiver not found"));
+                .orElseThrow(() -> new RuntimeException("Parent not found"));
     }
 }

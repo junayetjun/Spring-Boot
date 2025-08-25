@@ -19,7 +19,7 @@ public class Parent {
     private String email;
 
     @Column(length = 50)
-    private String contactPerson;
+    private String childName;
 
     @Column(length = 50)
     private String phone;
@@ -36,11 +36,11 @@ public class Parent {
     public Parent() {
     }
 
-    public Parent(Long id, String name, String email, String contactPerson, String phone, String photo, User user) {
+    public Parent(Long id, String name, String email, String childName, String phone, String photo, User user) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.contactPerson = contactPerson;
+        this.childName = childName;
         this.phone = phone;
         this.photo = photo;
         this.user = user;
@@ -71,12 +71,12 @@ public class Parent {
         this.email = email;
     }
 
-    public String getContactPerson() {
-        return contactPerson;
+    public String getChildName() {
+        return childName;
     }
 
-    public void setContactPerson(String contactPerson) {
-        this.contactPerson = contactPerson;
+    public void setChildName(String childName) {
+        this.childName = childName;
     }
 
     public String getPhone() {

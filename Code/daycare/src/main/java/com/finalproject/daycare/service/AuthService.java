@@ -315,31 +315,40 @@ public class AuthService {
     }
 
     public void registerParent(User user, MultipartFile imageFile, Parent parentData) {
+        // ✅ Validate required fields
+        if (parentData.getName() == null || parentData.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Parent name is required and cannot be null or empty.");
+        }
+
         if (imageFile != null && !imageFile.isEmpty()) {
-            // Save image for both User and JobSeeker
+            // ✅ Save image safely
             String filename = saveImage(imageFile, user);
+
+            // ✅ Only call saveImageForParent if parentName is safe
             String parentPhoto = saveImageForParent(imageFile, parentData);
+
             parentData.setPhoto(parentPhoto);
             user.setPhoto(filename);
         }
 
-        // Encode password before saving User
+        // ✅ Encode password and prepare User
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.PARENT);
         user.setActive(false);
 
-        // Save User FIRST and get persisted instance
+        // ✅ Save User FIRST
         User savedUser = userRepo.save(user);
 
-        // Now, associate saved User with JobSeeker and save JobSeeker
+        // ✅ Link saved user to parent
         parentData.setUser(savedUser);
         parentRepository.save(parentData);
 
-        // Now generate token and save Token associated with savedUser
+        // ✅ Generate token and save it
         String jwt = jwtService.generateToken(savedUser);
         saveUserToken(jwt, savedUser);
 
-        // Send Activation Email
+        // ✅ Send Activation Email
         sendActivationEmail(savedUser);
     }
+
 }
