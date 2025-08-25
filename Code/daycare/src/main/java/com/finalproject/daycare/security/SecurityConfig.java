@@ -36,34 +36,32 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/api/user/login",
+                        .requestMatchers(
+                                "/api/user/login",
                                 "/auth/login",
-                                "/api/caregiver/",
+                                "/api/caregiver/**",
                                 "/images/**",
                                 "/api/user/active/**",
                                 "/api/policestation/**",
                                 "/api/education/**",
                                 "/api/skill/**",
-                                "/api/categories/",
                                 "/api/categories/**",
-                                "/api/division/",
                                 "/api/division/**",
-                                "/api/district/",
                                 "/api/district/**",
-                                "/api/policestation/",
-                                "/api/parent/",
-                                "/api/parent/**",
+                                "/api/parent/**",   // ✅ FIX: now all parent endpoints allowed
                                 "/api/countries/**",
-                                "/api/division/**",
-                                "/api/policestation/**",
                                 "/api/addresses/**",
                                 "/api/employer/profile"
-
                         ).permitAll()
-                        .requestMatchers("/api/user/all","/api/caregiver/profile", "/api/education/all", "/api/experience/all", "/api/experience/add", "/api/education/add", "/api/skill/add", "/api/skill/all").hasRole("SERVICE_PROVIDER")
-                        .requestMatchers("api/parent/profile").hasRole("PARENT")
+                        .requestMatchers("/api/user/all", "/api/caregiver/profile",
+                                "/api/education/all", "/api/experience/all",
+                                "/api/experience/add", "/api/education/add",
+                                "/api/skill/add", "/api/skill/all")
+                        .hasRole("SERVICE_PROVIDER")
+                        .requestMatchers("/api/parent/profile").hasRole("PARENT") // ✅ FIX: added leading slash
                         .anyRequest().authenticated()
                 )
+
                 .userDetailsService(userService)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
