@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Caregiver {
@@ -23,22 +24,26 @@ public class Caregiver {
     private String skill;
     private String experience;
 
-
+    // ✅ MULTIPLE CATEGORIES FIELD
+    @ElementCollection(targetClass = Categories.class)
+    @CollectionTable(name = "caregiver_categories", joinColumns = @JoinColumn(name = "caregiver_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Categories> categories;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Education> educations;
 
+    // ✅ Constructors
+    public Caregiver() {}
 
-    public Caregiver() {
-    }
-
-    public Caregiver(Long id, String name, String email, String phone, String gender, String address, Date dateOfBirth, String photo, String skill, String experience, User user, List<Education> educations) {
+    public Caregiver(Long id, String name, String email, String phone, String gender, String address,
+                     Date dateOfBirth, String photo, String skill, String experience,
+                     Set<Categories> categories, User user, List<Education> educations) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -49,10 +54,12 @@ public class Caregiver {
         this.photo = photo;
         this.skill = skill;
         this.experience = experience;
+        this.categories = categories;
         this.user = user;
         this.educations = educations;
     }
 
+    // ✅ Getters and Setters
 
     public Long getId() {
         return id;
@@ -132,6 +139,14 @@ public class Caregiver {
 
     public void setExperience(String experience) {
         this.experience = experience;
+    }
+
+    public Set<Categories> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Categories> categories) {
+        this.categories = categories;
     }
 
     public User getUser() {

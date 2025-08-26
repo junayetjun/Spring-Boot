@@ -36,8 +36,6 @@ public class CaregiverRestController {
     @Autowired
     private CaregiverService caregiverService;
 
-
-
     @PostMapping("")
     public ResponseEntity<Map<String, String>> registerCaregiver(
             @RequestPart(value = "user") String userJson,
@@ -52,32 +50,40 @@ public class CaregiverRestController {
             userService.registerCaregiver(user, file, caregiver);
             Map<String, String> response = new HashMap<>();
             response.put("Message", "User Added Successfully ");
-
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-
             Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("Message", "User Add Faild " + e);
+            errorResponse.put("Message", "User Add Failed: " + e.getMessage());
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @GetMapping("all")
     public ResponseEntity<List<Caregiver>> getAllUsers() {
         List<Caregiver> caregiverList = caregiverService.getAll();
         return ResponseEntity.ok(caregiverList);
-
     }
 
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile(Authentication authentication) {
-        System.out.println("Authenticated User: " + authentication.getName());
-        System.out.println("Authorities: " + authentication.getAuthorities());
         String email = authentication.getName();
-        Optional<User> user =userRepo.findByEmail(email);
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.get().getId());
-        return ResponseEntity.ok(caregiver);
+        Optional<User> user = userRepo.findByEmail(email);
+        if (user.isPresent()) {
+            Caregiver caregiver = caregiverService.getProfileByUserId(user.get().getId());
+            return ResponseEntity.ok(caregiver);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
 
+    // ✅ NEW: Get caregivers by category
+    @GetMapping("/category/{category}")
+    public ResponseEntity<?> getCaregiversByCategory(@PathVariable String category) {
+        try {
+            List<Caregiver> caregivers = caregiverService.getByCategory(category);
+            return ResponseEntity.ok(caregivers);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Invalid category: " + category);
+        }
     }
 }

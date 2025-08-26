@@ -1,6 +1,7 @@
 package com.finalproject.daycare.service;
 
 import com.finalproject.daycare.entity.Caregiver;
+import com.finalproject.daycare.entity.Categories;
 import com.finalproject.daycare.repository.CaregiverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,15 @@ public class CaregiverService {
     public Caregiver getProfileByUserId(int userId) {
         return caregiverRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Caregiver not found"));
+    }
+
+    // ✅ Updated method to use the correct repository call
+    public List<Caregiver> getByCategory(String categoryName) {
+        try {
+            Categories category = Categories.valueOf(categoryName.toUpperCase());
+            return caregiverRepository.findByCategoriesContaining(category);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid category: " + categoryName);
+        }
     }
 }
