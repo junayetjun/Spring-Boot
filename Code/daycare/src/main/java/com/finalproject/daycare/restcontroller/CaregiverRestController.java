@@ -64,26 +64,26 @@ public class CaregiverRestController {
         return ResponseEntity.ok(caregiverList);
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<?> getProfile(Authentication authentication) {
-        String email = authentication.getName();
-        Optional<User> user = userRepo.findByEmail(email);
-        if (user.isPresent()) {
-            Caregiver caregiver = caregiverService.getProfileByUserId(user.get().getId());
-            return ResponseEntity.ok(caregiver);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-    }
+//    @GetMapping("/profile")
+//    public ResponseEntity<?> getProfile(Authentication authentication) {
+//        String email = authentication.getName();
+//        Optional<User> user = userRepo.findByEmail(email);
+//        if (user.isPresent()) {
+//            Caregiver caregiver = caregiverService.getProfileByUserId(user.get().getId());
+//            return ResponseEntity.ok(caregiver);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+//        }
+//    }
 
     // ✅ NEW: Get caregivers by category
-    @GetMapping("/category/{category}")
-    public ResponseEntity<?> getCaregiversByCategory(@PathVariable String category) {
-        try {
-            List<Caregiver> caregivers = caregiverService.getByCategory(category);
-            return ResponseEntity.ok(caregivers);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Invalid category: " + category);
-        }
-    }
+//    @GetMapping("/category/{category}")
+//    public ResponseEntity<?> getCaregiversByCategory(@PathVariable String category) {
+//        try {
+//            List<Caregiver> caregivers = caregiverService.getByCategory(category);
+//            return ResponseEntity.ok(caregivers);
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.badRequest().body("Invalid category: " + category);
+//        }
+//    }
 }

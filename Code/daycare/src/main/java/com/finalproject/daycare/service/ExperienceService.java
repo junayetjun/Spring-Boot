@@ -31,12 +31,12 @@ public class ExperienceService {
     }
 
 
-    public Experience save(Experience experience, String email) {
-        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
-        experience.setCaregiver(caregiver);
-        return experienceRepository.save(experience);
-    }
+//    public Experience save(Experience experience, String email) {
+//        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
+//        experience.setCaregiver(caregiver);
+//        return experienceRepository.save(experience);
+//    }
 
     public void delete(Long id) {
         experienceRepository.deleteById(id);

@@ -30,26 +30,26 @@ public class SkillRestController {
     private IUserRepo userRepo;
 
 
-    @PostMapping("add")
-    public ResponseEntity<Skill> addSkill(@RequestBody Skill skill, Authentication authentication) {
-        String email = authentication.getName();
-        Skill savedSkill = skillService.save(skill, email);
-        return ResponseEntity.ok(savedSkill);
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<Skill> addSkill(@RequestBody Skill skill, Authentication authentication) {
+//        String email = authentication.getName();
+//        Skill savedSkill = skillService.save(skill, email);
+//        return ResponseEntity.ok(savedSkill);
+//    }
 
 
-    @GetMapping("all")
-    public ResponseEntity<List<SkillDTO>> getSkillsByCareGiver(Authentication authentication) {
-        String email = authentication.getName();
-
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
-
-        List<SkillDTO> skills = skillService.getByCareGiverId(caregiver.getId());
-
-        return ResponseEntity.ok(skills);
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<List<SkillDTO>> getSkillsByCareGiver(Authentication authentication) {
+//        String email = authentication.getName();
+//
+//        User user = userRepo.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+//        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
+//
+//        List<SkillDTO> skills = skillService.getByCareGiverId(caregiver.getId());
+//
+//        return ResponseEntity.ok(skills);
+//    }
 
 
     @DeleteMapping("{id}")

@@ -28,13 +28,13 @@ public class ReferenceService {
                 .collect(Collectors.toList());
     }
 
-    public Reference save(Reference reference, String email) {
-        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
-
-        reference.setCaregiver(caregiver);
-        return referenceRepository.save(reference);
-    }
+//    public Reference save(Reference reference, String email) {
+//        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
+//
+//        reference.setCaregiver(caregiver);
+//        return referenceRepository.save(reference);
+//    }
 
     public void delete(Long id) {
         referenceRepository.deleteById(id);

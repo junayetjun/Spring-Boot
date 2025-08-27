@@ -28,15 +28,15 @@ public class EducationService {
                 .collect(Collectors.toList());
     }
 
-    public Education saveEducation(Education education, String email) {
-
-        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
-
-        education.setCaregiver(caregiver);
-
-        return educationRepository.save(education);
-    }
+//    public Education saveEducation(Education education, String email) {
+//
+//        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
+//
+//        education.setCaregiver(caregiver);
+//
+//        return educationRepository.save(education);
+//    }
 
     public void delete(Long id) {
         educationRepository.deleteById(id);

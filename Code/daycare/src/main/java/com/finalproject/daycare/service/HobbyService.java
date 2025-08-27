@@ -29,13 +29,13 @@ public class HobbyService {
                 .collect(Collectors.toList());
     }
 
-    public Hobby save(Hobby hobby, String email) {
-        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
-
-        hobby.setCaregiver(caregiver);
-        return hobbyRepository.save(hobby);
-    }
+//    public Hobby save(Hobby hobby, String email) {
+//        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
+//
+//        hobby.setCaregiver(caregiver);
+//        return hobbyRepository.save(hobby);
+//    }
 
     public void delete(Long id) {
         hobbyRepository.deleteById(id);

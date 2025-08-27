@@ -29,15 +29,15 @@ public class TrainingService {
                 .map(TrainingDTO::new)
                 .collect(Collectors.toList());
     }
-
-
-    public Training save(Training training, String email) {
-
-        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("CareGiver not found"));
-        training.setCaregiver(caregiver);
-        return trainingRepository.save(training);
-    }
+//
+//
+//    public Training save(Training training, String email) {
+//
+//        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("CareGiver not found"));
+//        training.setCaregiver(caregiver);
+//        return trainingRepository.save(training);
+//    }
 
     public void delete(Long id) {
         trainingRepository.deleteById(id);

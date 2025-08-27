@@ -28,13 +28,13 @@ public class LanguageService {
                 .collect(Collectors.toList());
     }
 
-    public Language save(Language language, String email) {
-        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
-
-        language.setCaregiver(caregiver);
-        return languageRepository.save(language);
-    }
+//    public Language save(Language language, String email) {
+//        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Caregiver not found"));
+//
+//        language.setCaregiver(caregiver);
+//        return languageRepository.save(language);
+//    }
 
     public void delete(Long id) {
         languageRepository.deleteById(id);

@@ -27,27 +27,27 @@ public class EducationRestController {
     @Autowired
     private IUserRepo userRepo;
 
-    @PostMapping("add")
-    public ResponseEntity<Education> addEducation(@RequestBody Education education, Authentication authentication) {
-        String email = authentication.getName();  // Logged-in user's email
-        Education savedEducation = educationService.saveEducation(education, email);
-        return ResponseEntity.ok(savedEducation);
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<Education> addEducation(@RequestBody Education education, Authentication authentication) {
+//        String email = authentication.getName();  // Logged-in user's email
+//        Education savedEducation = educationService.saveEducation(education, email);
+//        return ResponseEntity.ok(savedEducation);
+//    }
 
-    @GetMapping("all")
-    public ResponseEntity<List<EducationDTO>> getEducationsByJobSeeker(Authentication authentication) {
-        // Get logged-in user email
-        String email = authentication.getName();
-
-        Optional<User> user =userRepo.findByEmail(email);
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.get().getId());
-
-
-        List<EducationDTO> educations = educationService.getByCaregiverId(caregiver.getId());
-
-
-        return ResponseEntity.ok(educations);
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<List<EducationDTO>> getEducationsByCaregiver(Authentication authentication) {
+//        // Get logged-in user email
+//        String email = authentication.getName();
+//
+//        Optional<User> user =userRepo.findByEmail(email);
+//        Caregiver caregiver = caregiverService.getProfileByUserId(user.get().getId());
+//
+//
+//        List<EducationDTO> educations = educationService.getByCaregiverId(caregiver.getId());
+//
+//
+//        return ResponseEntity.ok(educations);
+//    }
 
 
     @DeleteMapping("{id}")

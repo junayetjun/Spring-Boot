@@ -19,14 +19,17 @@ public class Caregiver {
     private String phone;
     private String gender;
     private String address;
+
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
+
     private String photo;
     private String skill;
     private String experience;
 
-    // ✅ MULTIPLE CATEGORIES FIELD
-    @ElementCollection(targetClass = Categories.class)
-    @CollectionTable(name = "caregiver_categories", joinColumns = @JoinColumn(name = "caregiver_id"))
+    // ✅ Store multiple categories in a separate table and load eagerly
+//    @ElementCollection(targetClass = Categories.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "caregiver_categories", joinColumns = @JoinColumn(name = "caregiver_id"))
     @Enumerated(EnumType.STRING)
     private Set<Categories> categories;
 
@@ -39,7 +42,8 @@ public class Caregiver {
     private List<Education> educations;
 
     // ✅ Constructors
-    public Caregiver() {}
+    public Caregiver() {
+    }
 
     public Caregiver(Long id, String name, String email, String phone, String gender, String address,
                      Date dateOfBirth, String photo, String skill, String experience,

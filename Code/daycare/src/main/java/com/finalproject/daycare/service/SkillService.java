@@ -29,13 +29,13 @@ public class SkillService {
                 .collect(Collectors.toList());
     }
 
-    public Skill save(Skill skill, String email) {
-        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Care Giver not found"));
-
-        skill.setCaregiver(caregiver);
-        return skillRepo.save(skill);
-    }
+//    public Skill save(Skill skill, String email) {
+//        Caregiver caregiver = caregiverRepository.findByUserEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Care Giver not found"));
+//
+//        skill.setCaregiver(caregiver);
+//        return skillRepo.save(skill);
+//    }
 
     public void delete(Long id) {
         skillRepo.deleteById(id);

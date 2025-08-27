@@ -29,25 +29,25 @@ public class HobbyRestController {
     private IUserRepo userRepo;
 
 
-    @PostMapping("add")
-    public ResponseEntity<Hobby> addHobby(@RequestBody Hobby hobby, Authentication authentication) {
-        String email = authentication.getName();  // Logged-in user's email
-        Hobby savedHobby = hobbyService.save(hobby, email);
-        return ResponseEntity.ok(savedHobby);
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<Hobby> addHobby(@RequestBody Hobby hobby, Authentication authentication) {
+//        String email = authentication.getName();  // Logged-in user's email
+//        Hobby savedHobby = hobbyService.save(hobby, email);
+//        return ResponseEntity.ok(savedHobby);
+//    }
 
-    @GetMapping("all")
-    public ResponseEntity<List<HobbyDTO>> getHobbiesByCaregiver(Authentication authentication) {
-        String email = authentication.getName();
-
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
-
-        List<HobbyDTO> hobbies = hobbyService.getByCaregiverId(caregiver.getId());
-
-        return ResponseEntity.ok(hobbies);
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<List<HobbyDTO>> getHobbiesByCaregiver(Authentication authentication) {
+//        String email = authentication.getName();
+//
+//        User user = userRepo.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+//        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
+//
+//        List<HobbyDTO> hobbies = hobbyService.getByCaregiverId(caregiver.getId());
+//
+//        return ResponseEntity.ok(hobbies);
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteHobby(@PathVariable Long id) {

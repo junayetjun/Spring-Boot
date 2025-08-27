@@ -29,29 +29,29 @@ public class ExperienceRestController {
     private IUserRepo userRepo;
 
 
-    @PostMapping("add")
-    public ResponseEntity<Experience> addExperience(@RequestBody Experience experience, Authentication authentication) {
-        String email = authentication.getName();  // Logged-in user's email
-        Experience savedExperience = experienceService.save(experience, email);
-        return ResponseEntity.ok(savedExperience);
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<Experience> addExperience(@RequestBody Experience experience, Authentication authentication) {
+//        String email = authentication.getName();  // Logged-in user's email
+//        Experience savedExperience = experienceService.save(experience, email);
+//        return ResponseEntity.ok(savedExperience);
+//    }
 
 
-    @GetMapping("all")
-    public ResponseEntity<List<ExperienceDTO>> getEducationsByCaregiver(Authentication authentication) {
-        // Get logged-in user email
-        String email = authentication.getName();
-
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
-
-
-        List<ExperienceDTO> educations = experienceService.getByCaregiverId(caregiver.getId());
-
-
-        return ResponseEntity.ok(educations);
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<List<ExperienceDTO>> getEducationsByCaregiver(Authentication authentication) {
+//        // Get logged-in user email
+//        String email = authentication.getName();
+//
+//        User user = userRepo.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+//        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
+//
+//
+//        List<ExperienceDTO> educations = experienceService.getByCaregiverId(caregiver.getId());
+//
+//
+//        return ResponseEntity.ok(educations);
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteExperience(@PathVariable Long id) {

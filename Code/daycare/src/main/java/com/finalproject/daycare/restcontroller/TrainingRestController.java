@@ -29,25 +29,25 @@ public class TrainingRestController {
     private IUserRepo userRepo;
 
 
-    @PostMapping("add")
-    public ResponseEntity<Training> addTraining(@RequestBody Training training, Authentication authentication) {
-        String email = authentication.getName();  // Logged-in user's email
-        Training savedTraining = trainingService.save(training, email);
-        return ResponseEntity.ok(savedTraining);
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<Training> addTraining(@RequestBody Training training, Authentication authentication) {
+//        String email = authentication.getName();  // Logged-in user's email
+//        Training savedTraining = trainingService.save(training, email);
+//        return ResponseEntity.ok(savedTraining);
+//    }
 
-    @GetMapping("all")
-    public ResponseEntity<List<TrainingDTO>> getTrainingsByJobSeeker(Authentication authentication) {
-        String email = authentication.getName();
-
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
-
-        List<TrainingDTO> trainings = trainingService.getByCareGiverId(caregiver.getId());
-
-        return ResponseEntity.ok(trainings);
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<List<TrainingDTO>> getTrainingsByJobSeeker(Authentication authentication) {
+//        String email = authentication.getName();
+//
+//        User user = userRepo.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+//        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
+//
+//        List<TrainingDTO> trainings = trainingService.getByCareGiverId(caregiver.getId());
+//
+//        return ResponseEntity.ok(trainings);
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteTraining(@PathVariable Long id) {

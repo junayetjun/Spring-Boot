@@ -28,25 +28,25 @@ public class LanguageRestController {
     @Autowired
     private IUserRepo userRepo;
 
-    @PostMapping("add")
-    public ResponseEntity<Language> addLanguage(@RequestBody Language language, Authentication authentication) {
-        String email = authentication.getName();
-        Language savedLanguage = languageService.save(language, email);
-        return ResponseEntity.ok(savedLanguage);
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<Language> addLanguage(@RequestBody Language language, Authentication authentication) {
+//        String email = authentication.getName();
+//        Language savedLanguage = languageService.save(language, email);
+//        return ResponseEntity.ok(savedLanguage);
+//    }
 
-    @GetMapping("all")
-    public ResponseEntity<List<LanguageDTO>> getLanguagesByCaregiver(Authentication authentication) {
-        String email = authentication.getName();
-
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
-
-        List<LanguageDTO> languages = languageService.getByCaregiverId(caregiver.getId());
-
-        return ResponseEntity.ok(languages);
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<List<LanguageDTO>> getLanguagesByCaregiver(Authentication authentication) {
+//        String email = authentication.getName();
+//
+//        User user = userRepo.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+//        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
+//
+//        List<LanguageDTO> languages = languageService.getByCaregiverId(caregiver.getId());
+//
+//        return ResponseEntity.ok(languages);
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteLanguage(@PathVariable Long id) {

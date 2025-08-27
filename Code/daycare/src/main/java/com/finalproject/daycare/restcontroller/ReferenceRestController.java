@@ -28,25 +28,25 @@ public class ReferenceRestController {
     @Autowired
     private IUserRepo userRepo;
 
-    @PostMapping("add")
-    public ResponseEntity<Reference> addReference(@RequestBody Reference reference, Authentication authentication) {
-        String email = authentication.getName();
-        Reference savedReference = referenceService.save(reference, email);
-        return ResponseEntity.ok(savedReference);
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<Reference> addReference(@RequestBody Reference reference, Authentication authentication) {
+//        String email = authentication.getName();
+//        Reference savedReference = referenceService.save(reference, email);
+//        return ResponseEntity.ok(savedReference);
+//    }
 
-    @GetMapping("all")
-    public ResponseEntity<List<ReferenceDTO>> getReferencesByCaregiver(Authentication authentication) {
-        String email = authentication.getName();
-
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
-
-        List<ReferenceDTO> references = referenceService.getByCaregiverId(caregiver.getId());
-
-        return ResponseEntity.ok(references);
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<List<ReferenceDTO>> getReferencesByCaregiver(Authentication authentication) {
+//        String email = authentication.getName();
+//
+//        User user = userRepo.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+//        Caregiver caregiver = caregiverService.getProfileByUserId(user.getId());
+//
+//        List<ReferenceDTO> references = referenceService.getByCaregiverId(caregiver.getId());
+//
+//        return ResponseEntity.ok(references);
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteReference(@PathVariable Long id) {
