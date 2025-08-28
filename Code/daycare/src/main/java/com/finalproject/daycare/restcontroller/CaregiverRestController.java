@@ -3,6 +3,7 @@ package com.finalproject.daycare.restcontroller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalproject.daycare.entity.Caregiver;
+import com.finalproject.daycare.entity.Categories;
 import com.finalproject.daycare.entity.User;
 import com.finalproject.daycare.repository.CaregiverRepository;
 import com.finalproject.daycare.repository.IUserRepo;
@@ -58,11 +59,32 @@ public class CaregiverRestController {
         }
     }
 
+    @GetMapping("/categories")
+    public ResponseEntity<Categories[]> getCategories() {
+        return ResponseEntity.ok(Categories.values());
+    }
+
+
     @GetMapping("all")
     public ResponseEntity<List<Caregiver>> getAllUsers() {
         List<Caregiver> caregiverList = caregiverService.getAll();
         return ResponseEntity.ok(caregiverList);
     }
+
+
+    //for checking
+    @GetMapping("/caregiver/profile")
+    public ResponseEntity<Caregiver> getCaregiverProfile(Authentication authentication) {
+        String email = authentication.getName(); // Or however you identify the logged-in caregiver
+        Caregiver caregiver = caregiverService.getProfileByEmail(email); // Or appropriate lookup
+
+        if (caregiver == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(caregiver);
+    }
+
 
 //    @GetMapping("/profile")
 //    public ResponseEntity<?> getProfile(Authentication authentication) {
@@ -76,14 +98,14 @@ public class CaregiverRestController {
 //        }
 //    }
 
-    // ✅ NEW: Get caregivers by category
-//    @GetMapping("/category/{category}")
-//    public ResponseEntity<?> getCaregiversByCategory(@PathVariable String category) {
-//        try {
-//            List<Caregiver> caregivers = caregiverService.getByCategory(category);
-//            return ResponseEntity.ok(caregivers);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().body("Invalid category: " + category);
-//        }
-//    }
+//     ✅ NEW: Get caregivers by category
+    @GetMapping("/category/{category}")
+    public ResponseEntity<?> getCaregiversByCategory(@PathVariable String category) {
+        try {
+            List<Caregiver> caregivers = caregiverService.getByCategory(category);
+            return ResponseEntity.ok(caregivers);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Invalid category: " + category);
+        }
+    }
 }

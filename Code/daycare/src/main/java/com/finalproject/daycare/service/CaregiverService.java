@@ -37,12 +37,19 @@ public class CaregiverService {
 //    }
 
     // ✅ Updated method to use the correct repository call
-//    public List<Caregiver> getByCategory(String categoryName) {
-//        try {
-//            Categories category = Categories.valueOf(categoryName.toUpperCase());
-//            return caregiverRepository.findByCategoriesContaining(category);
-//        } catch (IllegalArgumentException e) {
-//            throw new RuntimeException("Invalid category: " + categoryName);
-//        }
-//    }
+    public List<Caregiver> getByCategory(String categoryName) {
+        try {
+            Categories category = Categories.valueOf(categoryName.toUpperCase());
+            return caregiverRepository.findByCategoriesContaining(category);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid category: " + categoryName);
+        }
+    }
+
+    //for practice
+    // ✅ Get caregiver profile by email (used in controller for /profile)
+    public Caregiver getProfileByEmail(String email) {
+        return caregiverRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Caregiver not found for email: " + email));
+    }
 }

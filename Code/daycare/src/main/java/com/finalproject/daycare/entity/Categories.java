@@ -6,13 +6,6 @@ public enum Categories {
     Baby,
     Adult,
 
-//    INFANT_CARE,
-//    TODDLER_CARE,
-//    SPECIAL_NEEDS,
-//    ELDERLY_CARE,
-//    NURSING_SUPPORT,
-//    MEAL_PREP,
-//    OVERNIGHT_CARE
 }
 
 

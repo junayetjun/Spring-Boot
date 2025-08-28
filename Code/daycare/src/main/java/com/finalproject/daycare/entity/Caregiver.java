@@ -27,11 +27,13 @@ public class Caregiver {
     private String skill;
     private String experience;
 
-    // ✅ Store multiple categories in a separate table and load eagerly
-//    @ElementCollection(targetClass = Categories.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "caregiver_categories", joinColumns = @JoinColumn(name = "caregiver_id"))
+    // ✅ Correct Enum Collection Mapping
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "caregiver_categories", joinColumns = @JoinColumn(name = "caregiver_id"))
     @Enumerated(EnumType.STRING)
+    @Column(name = "category")
     private Set<Categories> categories;
+
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -41,7 +43,6 @@ public class Caregiver {
     @JsonBackReference
     private List<Education> educations;
 
-    // ✅ Constructors
     public Caregiver() {
     }
 
@@ -63,7 +64,7 @@ public class Caregiver {
         this.educations = educations;
     }
 
-    // ✅ Getters and Setters
+    // Getters and Setters...
 
     public Long getId() {
         return id;

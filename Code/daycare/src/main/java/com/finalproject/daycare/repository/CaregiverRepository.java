@@ -22,5 +22,9 @@ public interface CaregiverRepository extends JpaRepository<Caregiver, Long> {
 //    Optional<Caregiver> findByIdWithEducations(@Param("id") Long id);
 //
 //    // ✅ Corrected method name for Set<Categories> field
-//    List<Caregiver> findByCategoriesContaining(Categories category);
+   List<Caregiver> findByCategoriesContaining(Categories category);
+
+
+   Optional<Caregiver> findByEmail(String email);
+
 }
