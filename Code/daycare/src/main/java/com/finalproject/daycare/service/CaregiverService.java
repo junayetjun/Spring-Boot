@@ -31,10 +31,10 @@ public class CaregiverService {
         caregiverRepository.deleteById(id);
     }
 
-//    public Caregiver getProfileByUserId(int userId) {
-//        return caregiverRepository.findByUserId(userId)
-//                .orElseThrow(() -> new RuntimeException("Caregiver not found"));
-//    }
+    public Caregiver getProfileByUserId(int userId) {
+        return caregiverRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Caregiver not found"));
+    }
 
     // ✅ Updated method to use the correct repository call
     public List<Caregiver> getByCategory(String categoryName) {

@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface CaregiverRepository extends JpaRepository<Caregiver, Long> {
 
-//    Optional<Caregiver> findByUserId(int userId);
+    Optional<Caregiver> findByUserId(int userId);
 //
 //    @Query("SELECT js FROM Caregiver js WHERE js.user.email = :email")
 //    Optional<Caregiver> findByUserEmail(@Param("email") String email);
