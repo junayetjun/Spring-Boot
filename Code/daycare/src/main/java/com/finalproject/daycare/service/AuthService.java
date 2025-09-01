@@ -275,7 +275,7 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not Found with this ID " + id));
 
         if (user != null) {
-            user.setActive(true);
+            user.setActive(false);
 
             userRepo.save(user);
             return "User Activated Successfully!";
