@@ -194,7 +194,7 @@ public class AuthService {
         // Encode password before saving User
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.SERVICE_PROVIDER);
-        user.setActive(false);
+        user.setActive(true);
 
         // Save User FIRST and get persisted instance
         User savedUser = userRepo.save(user);
@@ -275,7 +275,7 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not Found with this ID " + id));
 
         if (user != null) {
-            user.setActive(false);
+            user.setActive(true);
 
             userRepo.save(user);
             return "User Activated Successfully!";
