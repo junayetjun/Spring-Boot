@@ -57,8 +57,8 @@ public class SecurityConfig {
                                         "/api/refference/**",
                                         "/api/training/**",
                                         "/api/user/active/**",
-                                        "/api/employer/",
-                                        "/api/employer/**",
+                                        "/api/parent/",
+                                        "/api/parent/**",
                                         "/api/admin/",
                                         "/api/admin/**",
                                         "/api/categories/",
@@ -72,7 +72,7 @@ public class SecurityConfig {
 
                                 ).permitAll()
                                 .requestMatchers("/api/user/all",
-                                        "/api/jobseeker/profile",
+                                        "/api/caregiver/profile",
                                         "/api/education/add",
                                         "/api/education/all",
                                         "/api/experience/add",
@@ -93,7 +93,7 @@ public class SecurityConfig {
                                         "/api/applications/my",
                                         "/images/**"
                                 ).hasRole("CAREGIVER")
-                                .requestMatchers("/api/employer/profile",
+                                .requestMatchers("/api/parent/profile",
                                         "/images/**",
                                         "/api/jobs/**",
                                         "/api/applications/applicant/"
