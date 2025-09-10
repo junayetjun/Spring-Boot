@@ -79,19 +79,15 @@ public class AuthService {
     // for User folder (for caregiver)
     public String saveImage(MultipartFile file, User user) {
 
-        Path uploadPath = Paths.get(uploadDir + "/users");
+        Path uploadPath = Paths.get(uploadDir + "/user");
         if (!Files.exists(uploadPath)) {
             try {
-                Files.createDirectories(uploadPath);
-
+                Files.createDirectories(uploadPath);  // change here
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-
         String fileName = user.getName() + "_" + UUID.randomUUID().toString();
-
-
         try {
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(file.getInputStream(), filePath);
@@ -99,7 +95,6 @@ public class AuthService {
             throw new RuntimeException(e);
         }
         return fileName;
-
     }
 
     private void saveUserToken(String jwt, User user) {
