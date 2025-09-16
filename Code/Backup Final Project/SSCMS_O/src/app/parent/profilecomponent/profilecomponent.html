@@ -1,0 +1,92 @@
+<div class="container py-5">
+  <div class="row">
+
+    <!-- Sidebar -->
+    <div class="col-md-3 mb-4">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">Menu</h5>
+          <div class="d-grid gap-2">
+            <button class="btn btn-outline-primary" [routerLink]="['/myjob']">
+              My Jobs
+            </button>
+            <button class="btn btn-outline-primary" [routerLink]="['/addjob']">
+              Post New Job
+            </button>
+            <button class="btn btn-outline-primary" [routerLink]="['/profile/edit']">
+              Edit Profile
+            </button>
+            <button class="btn btn-outline-danger" (click)="onLogout()">
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Employer Profile Card -->
+    <div class="col-md-9">
+      <div *ngIf="parent" class="card shadow-lg border-0 rounded-4">
+
+        <!-- Card Header -->
+        <div class="card-header bg-dark text-white rounded-top-4">
+          <h4 class="mb-0 text-center">
+            <i class="bi bi-building me-2"></i>
+            Parent Profile
+          </h4>
+        </div>
+
+        <div class="card-body">
+          <div class="row align-items-center">
+
+            <!-- Company Logo -->
+            <div class="col-md-3 text-center mb-4 mb-md-0">
+              <img [src]="'http://localhost:8085/images/parent/' + parent.photo" alt="Parent Photo" height="150" width="150"
+                class="img-thumbnail shadow-sm rounded-circle border border-3 border-primary mb-3" />
+              <h5 class="fw-bold text-primary">{{ parent.parentName || 'Parent Name' }}</h5>
+              <!-- <span class="badge bg-info text-dark">{{ parent.industry || 'Industry' }}</span> -->
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-md-9">
+              <div class="row gy-3">
+                <div class="col-md-6">
+                  <i class="bi bi-person-fill me-2 text-secondary"></i>
+                  <strong>Contact Person:</strong>
+                  <span class="ms-1 text-dark">{{ parent.contactPerson }}</span>
+                </div>
+                <div class="col-md-6">
+                  <i class="bi bi-envelope-fill me-2 text-secondary"></i>
+                  <strong>Email:</strong>
+                  <span class="ms-1 text-dark">{{ parent.email }}</span>
+                </div>
+                <div class="col-md-6">
+                  <i class="bi bi-telephone-fill me-2 text-secondary"></i>
+                  <strong>Phone:</strong>
+                  <span class="ms-1 text-dark">{{ parent.phone }}</span>
+                </div>
+                <div class="col-md-6">
+                  <i class="bi bi-globe me-2 text-secondary"></i>
+                  <strong>Child Name:</strong>
+                  <a [href]="parent.website" target="_blank" class="ms-1 link-primary text-decoration-none">
+                    {{ parent.childName }}
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="!parent" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3 text-muted">Loading parent profile...</p>
+      </div>
+    </div>
+
+  </div>
+</div>

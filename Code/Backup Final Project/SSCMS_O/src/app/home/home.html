@@ -1,0 +1,119 @@
+<!-- Hero Section with Search Filters -->
+<section class="py-5 text-white" style="background: linear-gradient(to right, #1e3c72, #2a5298);">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">Baby Day Care</h1>
+    <p class="lead mb-4 text-light">Search your service which you needed.</p>
+
+    <!-- Search Form -->
+    <form class="row g-2 justify-content-center" (ngSubmit)="filterJobs()">
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="selectedCategoryId" name="category">
+          <option [ngValue]="null">All Categories</option>
+          <option *ngFor="let category of categories" [ngValue]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="selectedLocationId" name="location">
+          <option [ngValue]="null">All Locations</option>
+          <option *ngFor="let location of locations" [ngValue]="location.id">
+            {{ location.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-warning w-100">Search</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+
+<!-- Features Section -->
+<section class="py-5 bg-danger bg-opacity-10 text-center">
+  <div class="container">
+    <h2 class="mb-4 fw-bold">Why Choose US?</h2>
+    <div class="row g-4">
+      <div class="col-md-4 ">
+        <div class="p-4 bg-info bg-opacity-25 shadow rounded">
+          <i class="fas fa-briefcase fa-2x text-primary mb-3"></i>
+          <h5>Verified Caregiver</h5>
+          <p>All caregiver are verified and trusted.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-4 bg-primary bg-opacity-25 shadow rounded">
+          <i class="fas fa-users fa-2x text-success mb-3"></i>
+          <h5>Top Service Giver</h5>
+          <p>They are alaways wiling to do their work.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-4 bg-success bg-opacity-25 shadow rounded">
+          <i class="fas fa-bolt fa-2x text-warning mb-3"></i>
+          <h5>Instant Alerts</h5>
+          <p>Get instant reply from Service provider.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Job Listings -->
+<section class="py-5 bg-dark bg-opacity-10">
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Here are our Service Provider..</h2>
+
+    <div *ngIf="jobs.length === 0" class="alert alert-info text-center">
+      No caregiver available.
+    </div>
+
+    <div class="row">
+      <div *ngFor="let job of jobs" class="mb-3 w-100">
+        <div class="card shadow-sm text-dark" style="background-color: #f0f8ff; border-radius: 10px;">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <!-- Job Info -->
+            <div class="me-3 flex-grow-1">
+              <h5 class="card-title">{{ job.title }}</h5>
+              <p class="card-text mb-2">
+                <strong>Location:</strong> {{ job.location }}<br>
+                <strong>Salary:</strong> {{ job.salary | currency }}<br>
+                <strong>Type:</strong> {{ job.jobType }}<br>
+                <strong>Posted:</strong> {{ job.postedDate | date:'mediumDate' }}
+              </p>
+              <hr>
+              <h6>Parent Info</h6>
+              <p class="card-text mb-0">
+                <strong>Company:</strong> {{ job.parentName }}<br>
+                <strong>Contact:</strong> {{ job.contactPerson }}<br>
+                <strong>Email:</strong> {{ job.email }}<br>
+                <strong>Phone:</strong> {{ job.phone }}<br>
+                <strong>Website:</strong>
+                <a [href]="job.childName" target="_blank">{{ job.childName }}</a>
+              </p>
+            </div>
+
+            <!-- Logo on right -->
+            <div>
+              <img [src]="'http://localhost:8085/images/parent/' + job.photo" alt="{{ job.parentName }} Logo"
+                class="img-fluid" style="max-height: 150px;">
+            </div>
+          </div>
+
+          <div class="card-footer text-end bg-transparent border-0">
+            <button class="btn btn-primary btn-sm" [routerLink]="['/jobs', job.id]">View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
