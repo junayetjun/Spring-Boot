@@ -18,6 +18,8 @@ import { JobDetailsComponent } from './jobs/job-details.component/job-details.co
 import { Alljobs } from './jobs/alljobs/alljobs';
 import { Mypost } from './mypost/mypost/mypost';
 import { AppliedJobs } from './caregiver/applied-jobs/applied-jobs';
+import { Alluser } from './user/alluser/alluser';
+import { Userhome } from './layout/userhome/userhome';
 
 
 const routes: Routes = [
@@ -42,6 +44,8 @@ const routes: Routes = [
   { path: 'alljobs', component: Alljobs },
   { path: 'myjob', component: Mypost },
   { path: 'apply', component: AppliedJobs },
+  { path: 'allUser', component: Alluser },
+  { path: 'userhome', component: Userhome },
 
 
 ];

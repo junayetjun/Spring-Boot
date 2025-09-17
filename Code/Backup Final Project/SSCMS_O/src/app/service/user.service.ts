@@ -13,7 +13,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
-  getAllEmp(): Observable<User[]> {
+  getAllParent(): Observable<User[]> {
 
     return this.http.get<User[]>(this.baseUrl);
   }

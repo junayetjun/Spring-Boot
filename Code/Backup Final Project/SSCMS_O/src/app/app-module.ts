@@ -28,6 +28,8 @@ import { Alljobs } from './jobs/alljobs/alljobs';
 import { Mypost } from './mypost/mypost/mypost';
 import { AppliedJobs } from './caregiver/applied-jobs/applied-jobs';
 import { Parentjobapplications } from './parent/parentjobapplications/parentjobapplications';
+import { Alluser } from './user/alluser/alluser';
+import { Userhome } from './layout/userhome/userhome';
 
 
 
@@ -57,6 +59,8 @@ import { Parentjobapplications } from './parent/parentjobapplications/parentjoba
     Mypost,
     AppliedJobs,
     Parentjobapplications,
+    Alluser,
+    Userhome,
    
    
   ],
