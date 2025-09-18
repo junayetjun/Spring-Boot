@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CaregiverService } from '../../service/caregiver.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class AddcaregiverComponent {
   message: string = '';
 
   constructor(private fb: FormBuilder,
-    private caregiverService: CaregiverService) {
+    private caregiverService: CaregiverService,
+    private router: Router) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -71,6 +73,7 @@ export class AddcaregiverComponent {
         this.userForm.reset();
         this.caregiverForm.reset();
         this.photoFile = undefined!;
+        this.router.navigate(['/login'])
       },
       error: err => {
         this.message = 'Registration failed: ' + (err.error?.Message || err.message);
