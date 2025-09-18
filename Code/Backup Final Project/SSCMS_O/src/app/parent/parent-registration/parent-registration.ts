@@ -28,7 +28,7 @@ export class ParentRegistration {
       parentName: ['', Validators.required],
       address: ['', Validators.required],
       childName: ['', Validators.required],
-      type: ['', Validators.required]
+      gender: ['', Validators.required]
     });
   }
 
@@ -65,7 +65,7 @@ export class ParentRegistration {
       parentName: this.parentForm.value.parentName,
       address: this.parentForm.value.address,
       childName: this.parentForm.value.childName,
-      type: this.parentForm.value.type
+      gender: this.parentForm.value.gender
     };
 
     this.parentService.registerParent(user, parent, this.photoFile).subscribe({

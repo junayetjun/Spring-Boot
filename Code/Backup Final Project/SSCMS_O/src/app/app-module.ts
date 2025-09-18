@@ -30,6 +30,7 @@ import { AppliedJobs } from './caregiver/applied-jobs/applied-jobs';
 import { Parentjobapplications } from './parent/parentjobapplications/parentjobapplications';
 import { Alluser } from './user/alluser/alluser';
 import { Userhome } from './layout/userhome/userhome';
+import { Pauserhome } from './layout/pauserhome/pauserhome';
 
 
 
@@ -61,6 +62,7 @@ import { Userhome } from './layout/userhome/userhome';
     Parentjobapplications,
     Alluser,
     Userhome,
+    Pauserhome,
    
    
   ],

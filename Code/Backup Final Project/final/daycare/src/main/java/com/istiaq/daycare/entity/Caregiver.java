@@ -1,5 +1,6 @@
 package com.istiaq.daycare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -23,11 +24,16 @@ public class Caregiver {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobs"})
+    private Category category;
+
 
     public Caregiver() {
     }
 
-    public Caregiver(Long id, String name, String email, String phone, String gender, String address, Date dateOfBirth, String photo, User user) {
+    public Caregiver(Long id, String name, String email, String phone, String gender, String address, Date dateOfBirth, String photo, User user, Category category) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -37,8 +43,8 @@ public class Caregiver {
         this.dateOfBirth = dateOfBirth;
         this.photo = photo;
         this.user = user;
+        this.category = category;
     }
-
 
     public Long getId() {
         return id;
@@ -110,5 +116,13 @@ public class Caregiver {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

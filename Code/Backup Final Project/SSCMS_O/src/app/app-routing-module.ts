@@ -20,6 +20,7 @@ import { Mypost } from './mypost/mypost/mypost';
 import { AppliedJobs } from './caregiver/applied-jobs/applied-jobs';
 import { Alluser } from './user/alluser/alluser';
 import { Userhome } from './layout/userhome/userhome';
+import { Pauserhome } from './layout/pauserhome/pauserhome';
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'caregiverlist', component: CaregiverListComponent },
   // {path:'', component: Caregiverprofile},
-  { path: '', component: Home },
+  // { path: '', component: Home },
   { path: 'home', component: Home },
   { path: 'addcat', component: Addcategory },
   { path: 'addjob', component: Addjob },
@@ -46,6 +47,8 @@ const routes: Routes = [
   { path: 'apply', component: AppliedJobs },
   { path: 'allUser', component: Alluser },
   { path: 'userhome', component: Userhome },
+  { path: '', component: Userhome },
+  { path: 'phome', component: Pauserhome },
 
 
 ];

@@ -33,7 +33,7 @@ public class Parent {
     @Column(length = 200)
     private String childName;
 
-    private String type;
+    private String gender;
     private String photo;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -50,7 +50,7 @@ public class Parent {
     }
 
 
-    public Parent(Long id, String parentName, String contactPerson, String email, String password, String phone, String address, String childName, String type, String photo, List<Job> jobs, User user) {
+    public Parent(Long id, String parentName, String contactPerson, String email, String password, String phone, String address, String childName, String gender, String photo, List<Job> jobs, User user) {
         this.id = id;
         this.parentName = parentName;
         this.contactPerson = contactPerson;
@@ -59,7 +59,7 @@ public class Parent {
         this.phone = phone;
         this.address = address;
         this.childName = childName;
-        this.type = type;
+        this.gender = gender;
         this.photo = photo;
         this.jobs = jobs;
         this.user = user;
@@ -129,12 +129,12 @@ public class Parent {
         this.childName = childName;
     }
 
-    public String getType() {
-        return type;
+    public String getGender() {
+        return gender;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getPhoto() {

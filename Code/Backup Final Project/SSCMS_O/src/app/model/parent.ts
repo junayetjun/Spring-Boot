@@ -8,7 +8,7 @@ export interface Parent {
     phoneNumber: string;
     address: string;
     childName: string;
-    type: string;
+    gender: string;
     photo: string;
 
 
