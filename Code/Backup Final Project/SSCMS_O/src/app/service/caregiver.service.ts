@@ -5,6 +5,7 @@ import { AuthService } from './auth-service';
 import { Observable } from 'rxjs';
 import { Caregiver } from '../model/caregiver.model';
 import { isPlatformBrowser } from '@angular/common';
+import { AllCaregiverDTO } from '../model/allcaregiverDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,21 @@ export class CaregiverService {
     }
 
     return this.http.get<Caregiver>(`${this.baseUrl}profile`, { headers });
+  }
+
+
+  // GET all jobs
+  getAllCaregiver(): Observable<AllCaregiverDTO[]> {
+    return this.http.get<AllCaregiverDTO[]>(this.baseUrl);
+  }
+
+  searchCaregiver(categoryId?: number | null,): Observable<AllCaregiverDTO[]> {
+    let params: any = {};
+
+
+    if (categoryId) params.categoryId = categoryId;
+
+    return this.http.get<AllCaregiverDTO[]>(`${this.baseUrl}search`, { params });
   }
 
 }

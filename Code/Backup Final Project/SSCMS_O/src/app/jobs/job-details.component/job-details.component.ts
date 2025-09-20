@@ -28,26 +28,21 @@ export class JobDetailsComponent {
         this.job = data;
         console.log(data);
         this.cd.markForCheck();
-
       },
       error: err => console.error(err)
     });
   }
 
-
   onLogoError(event: any) {
-    event.target.src = 'assets/images/parent'; // placeholder if image fails
+    event.target.src = 'assets/default-parent.png'; // fallback image path
   }
 
-
   applyJob(jobId: number, parentId: number) {
-    // Prepare payload for API
     const applyPayload = {
       job: { id: jobId },
       parent: { id: parentId }
     };
 
-    // Call service
     this.applyService.applyForJob(applyPayload).subscribe({
       next: (res) => {
         console.log('Application successful:', res);
@@ -55,9 +50,8 @@ export class JobDetailsComponent {
       },
       error: (err) => {
         console.error('Application failed:', err);
-        alert('Failed to application. Please login first.');
+        alert('Failed to apply. Please login first.');
       }
     });
   }
-
 }

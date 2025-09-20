@@ -103,6 +103,27 @@
 			<version>8.3.0</version> <!-- Use latest stable version -->
 		</dependency>
 
+		<!-- iText 7 - PDF kernel -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>kernel</artifactId>
+			<version>7.2.5</version> <!-- or latest -->
+		</dependency>
+
+		<!-- iText 7 - Layout module (for Document, Paragraph, Table, etc.) -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>layout</artifactId>
+			<version>7.2.5</version>
+		</dependency>
+
+		<!-- iText 7 - IO module (needed for ImageDataFactory and image support) -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>io</artifactId>
+			<version>7.2.5</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

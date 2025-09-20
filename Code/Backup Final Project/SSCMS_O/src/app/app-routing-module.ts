@@ -23,6 +23,8 @@ import { Userhome } from './layout/userhome/userhome';
 import { Pauserhome } from './layout/pauserhome/pauserhome';
 import { Personalinfo } from './caregiver/personalinfo/personalinfo';
 import { Cnavbar } from './layout/cnavbar/cnavbar';
+import { Viewdetails } from './parent/viewdetails/viewdetails';
+import { Allcaregiver } from './parent/allcaregiver/allcaregiver';
 
 
 const routes: Routes = [
@@ -53,6 +55,8 @@ const routes: Routes = [
   { path: 'phome', component: Pauserhome },
   { path: 'pinfo', component: Personalinfo },
   { path: 'cnavbar', component: Cnavbar },
+  { path: 'cdetails', component: Viewdetails },
+  { path: 'allcaregiver', component: Allcaregiver },
 
 
 ];

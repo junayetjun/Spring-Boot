@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class Caregiver {
@@ -29,11 +30,31 @@ public class Caregiver {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobs"})
     private Category category;
 
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Education> educations;
+
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reference> references;
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Experience> experiences;
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Hobby> hobbies;
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Language> languages;
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Skill> skills;
+
+
 
     public Caregiver() {
     }
 
-    public Caregiver(Long id, String name, String email, String phone, String gender, String address, Date dateOfBirth, String photo, User user, Category category) {
+    public Caregiver(Long id, String name, String email, String phone, String gender, String address, Date dateOfBirth, String photo, User user, Category category, List<Education> educations, List<Reference> references, List<Experience> experiences, List<Hobby> hobbies, List<Language> languages, List<Skill> skills) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -44,6 +65,12 @@ public class Caregiver {
         this.photo = photo;
         this.user = user;
         this.category = category;
+        this.educations = educations;
+        this.references = references;
+        this.experiences = experiences;
+        this.hobbies = hobbies;
+        this.languages = languages;
+        this.skills = skills;
     }
 
     public Long getId() {
@@ -124,5 +151,53 @@ public class Caregiver {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
+    }
+
+    public List<Reference> getReferences() {
+        return references;
+    }
+
+    public void setReferences(List<Reference> references) {
+        this.references = references;
+    }
+
+    public List<Experience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<Experience> experiences) {
+        this.experiences = experiences;
+    }
+
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public List<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
 }

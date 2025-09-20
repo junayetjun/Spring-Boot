@@ -35,6 +35,7 @@ import { Personalinfo } from './caregiver/personalinfo/personalinfo';
 import { Adminprofile } from './admin/adminprofile/adminprofile';
 import { Cnavbar } from './layout/cnavbar/cnavbar';
 import { Viewdetails } from './parent/viewdetails/viewdetails';
+import { Allcaregiver } from './parent/allcaregiver/allcaregiver';
 
 
 
@@ -71,6 +72,7 @@ import { Viewdetails } from './parent/viewdetails/viewdetails';
     Adminprofile,
     Cnavbar,
     Viewdetails,
+    Allcaregiver,
    
    
   ],
