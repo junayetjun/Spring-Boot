@@ -31,6 +31,10 @@ import { Parentjobapplications } from './parent/parentjobapplications/parentjoba
 import { Alluser } from './user/alluser/alluser';
 import { Userhome } from './layout/userhome/userhome';
 import { Pauserhome } from './layout/pauserhome/pauserhome';
+import { Personalinfo } from './caregiver/personalinfo/personalinfo';
+import { Adminprofile } from './admin/adminprofile/adminprofile';
+import { Cnavbar } from './layout/cnavbar/cnavbar';
+import { Viewdetails } from './parent/viewdetails/viewdetails';
 
 
 
@@ -63,6 +67,10 @@ import { Pauserhome } from './layout/pauserhome/pauserhome';
     Alluser,
     Userhome,
     Pauserhome,
+    Personalinfo,
+    Adminprofile,
+    Cnavbar,
+    Viewdetails,
    
    
   ],

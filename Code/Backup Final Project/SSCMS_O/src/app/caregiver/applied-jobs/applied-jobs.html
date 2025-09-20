@@ -1,24 +1,18 @@
+<app-navbar></app-navbar>
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-4 mb-4" *ngFor="let app of applications; let i = index">
-            <div class="card h-100 text-white shadow-lg border-0 colorful-card" [ngClass]="'bg-gradient-' + (i % 6)">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold fs-5">
-                        <i class="bi bi-briefcase-fill me-2"></i>{{ app.jobTitle }}
-                    </h5>
-                    <p class="card-text mb-1">
-                        <strong><i class="bi bi-building me-1"></i>Parent:</strong>
-                        {{ app.parentName }}
-                    </p>
-                    <p class="card-text">
-                        <strong><i class="bi bi-person-fill me-1"></i>Caregiver:</strong>
-                        {{ app.caregiverName }}
-                    </p>
+    <div class="row g-4">
+        <div class="col-md-4" *ngFor="let app of applications; let i = index">
+            <div class="card modern-card">
+                <div class="card-header">
+                    <h5 class="card-title">{{ app.jobTitle }}</h5>
                 </div>
-                <div class="card-footer bg-transparent border-0 text-end">
-                    <button class="btn btn-warning btn-sm fw-semibold px-3 shadow-sm"
-                        [routerLink]="['/jobs', app.jobId]">
-                        <i class="bi bi-box-arrow-up-right me-1"></i> View Details
+                <div class="card-body">
+                    <p><strong>Parent:</strong> {{ app.parentName }}</p>
+                    <p><strong>Caregiver:</strong> {{ app.caregiverName }}</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-modern" [routerLink]="['/jobs', app.jobId]">
+                        View Details
                     </button>
                 </div>
             </div>

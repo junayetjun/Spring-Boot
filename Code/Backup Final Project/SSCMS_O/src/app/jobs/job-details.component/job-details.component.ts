@@ -51,11 +51,11 @@ export class JobDetailsComponent {
     this.applyService.applyForJob(applyPayload).subscribe({
       next: (res) => {
         console.log('Application successful:', res);
-        alert('You have successfully applied for this job!');
+        alert('You have successfully applied for this application!');
       },
       error: (err) => {
         console.error('Application failed:', err);
-        alert('Failed to apply. Please login first.');
+        alert('Failed to application. Please login first.');
       }
     });
   }

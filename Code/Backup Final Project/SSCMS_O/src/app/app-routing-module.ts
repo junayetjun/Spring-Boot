@@ -21,6 +21,8 @@ import { AppliedJobs } from './caregiver/applied-jobs/applied-jobs';
 import { Alluser } from './user/alluser/alluser';
 import { Userhome } from './layout/userhome/userhome';
 import { Pauserhome } from './layout/pauserhome/pauserhome';
+import { Personalinfo } from './caregiver/personalinfo/personalinfo';
+import { Cnavbar } from './layout/cnavbar/cnavbar';
 
 
 const routes: Routes = [
@@ -49,6 +51,8 @@ const routes: Routes = [
   { path: 'userhome', component: Userhome },
   { path: '', component: Userhome },
   { path: 'phome', component: Pauserhome },
+  { path: 'pinfo', component: Personalinfo },
+  { path: 'cnavbar', component: Cnavbar },
 
 
 ];

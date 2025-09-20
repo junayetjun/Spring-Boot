@@ -3,6 +3,8 @@ import { ParentService } from '../../service/parent.service';
 import { AuthService } from '../../service/auth-service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { JobDTO } from '../../model/jobDTO';
+import { JobService } from '../../service/job.service';
 
 @Component({
   selector: 'app-profilecomponent',
@@ -13,6 +15,10 @@ import { FormBuilder } from '@angular/forms';
 export class Profilecomponent {
 
 
+  jobs: JobDTO[] = [];
+  loading = true;
+  errorMsg: string | null = null;
+
   parent: any;
 
 
@@ -20,13 +26,16 @@ export class Profilecomponent {
     private parentService: ParentService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private jobService: JobService,
+
 
   ) {
   }
 
   ngOnInit(): void {
     this.getProfile();
+    this.fetchMyJobs();
 
   }
 
@@ -48,6 +57,21 @@ export class Profilecomponent {
 
   onLogout(): void {
     this.authService.logout();
+  }
+
+  fetchMyJobs(): void {
+    this.jobService.getMyJobs().subscribe({
+      next: (data) => {
+        this.jobs = data;
+        this.cdr.markForCheck();
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMsg = 'Failed to load jobs.';
+        this.loading = false;
+      }
+    });
   }
 
 }
