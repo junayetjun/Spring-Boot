@@ -52,10 +52,11 @@ const routes: Routes = [
   { path: 'allUser', component: Alluser },
   { path: 'userhome', component: Userhome },
   { path: '', component: Userhome },
+  { path: 'mainhome', component: Userhome },
   { path: 'phome', component: Pauserhome },
   { path: 'pinfo', component: Personalinfo },
   { path: 'cnavbar', component: Cnavbar },
-  { path: 'cdetails', component: Viewdetails },
+  { path: 'cdetails/:id', component: Viewdetails },
   { path: 'allcaregiver', component: Allcaregiver },
 
 

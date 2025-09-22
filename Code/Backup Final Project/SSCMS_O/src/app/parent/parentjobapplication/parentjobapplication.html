@@ -15,6 +15,7 @@
   <div *ngFor="let app of applications" class="app-card">
     <div class="card-header">
       <div class="avatar">{{ app.caregiverName.charAt(0) }}</div>
+      {{ app.experiences}}
       <div class="header-info">
         <h4>{{ app.caregiverName }}</h4>
         <span>Applied for: {{ app.jobTitle }}</span>
@@ -26,7 +27,7 @@
       <p><strong>Inquiry ID:</strong> {{ app.id }}</p>
     </div>
     <div class="card-footer">
-      <a href="/cdetails"><button class="btn-view">View Details</button></a>      
+      <button class="btn-view" (click)="viewDetails(app.caregiverId)">View Details</button>
       <button class="btn-message">Message</button>
     </div>
   </div>

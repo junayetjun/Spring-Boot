@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ApplyDTO } from '../../model/applyDTO';
 import { ApplyService } from '../../service/apply.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-parentjobapplication',
@@ -20,7 +20,8 @@ export class Parentjobapplication {
   constructor(
     private applyService: ApplyService,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private ar: Router
 
   ) { }
 
@@ -49,6 +50,11 @@ export class Parentjobapplication {
         this.loading = false;
       }
     });
+  }
+
+  viewDetails(id: number){
+    console.log(id);
+    this.ar.navigate(['/cdetails', id])
   }
 
 

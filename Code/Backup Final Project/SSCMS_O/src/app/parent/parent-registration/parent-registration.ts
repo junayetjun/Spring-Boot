@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParentService } from '../../service/parent.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-parent-registration',
@@ -15,7 +16,8 @@ export class ParentRegistration {
   message: string = '';
 
   constructor(private fb: FormBuilder,
-    private parentService: ParentService
+    private parentService: ParentService,
+    private router: Router
   ) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
@@ -74,6 +76,7 @@ export class ParentRegistration {
         this.userForm.reset();
         this.parentForm.reset();
         this.photoFile = undefined!;
+        this.router.navigate(['mainhome'])
       },
       error: err => {
         this.message = 'Registration failed: ' + (err.error?.Message || err.message);

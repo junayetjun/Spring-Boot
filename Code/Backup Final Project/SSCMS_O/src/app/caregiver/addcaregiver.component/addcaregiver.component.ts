@@ -95,7 +95,7 @@ export class AddcaregiverComponent implements OnInit {
         this.userForm.reset();
         this.caregiverForm.reset();
         this.photoFile = undefined!;
-        this.router.navigate(['/login']);
+        this.router.navigate(['/mainhome']);
       },
       error: err => {
         this.message = 'Registration failed: ' + (err.error?.Message || err.message);
